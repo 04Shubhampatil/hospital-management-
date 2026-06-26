@@ -9,7 +9,7 @@ export default function MyReports() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get("/reports/my").then(({ data }) => setReports(data)).catch(() => setError("Failed to load reports"));
+    api.get("/api/reports/my").then(({ data }) => setReports(data)).catch(() => setError("Failed to load reports"));
   }, []);
 
   return (

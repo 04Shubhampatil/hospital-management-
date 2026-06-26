@@ -9,7 +9,7 @@ export default function ReportDetails() {
   const [report, setReport] = useState(null);
 
   useEffect(() => {
-    api.get(`/reports/${id}`).then(({ data }) => setReport(data));
+    api.get(`/api/reports/${id}`).then(({ data }) => setReport(data));
   }, [id]);
 
   if (!report) return (

@@ -8,14 +8,14 @@ export default function AllReports() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get("/admin/reports").then(({ data }) => setReports(data)).catch(() => setError("Failed to load reports"));
-    api.get("/doctors").then(({ data }) => setDoctors(data)).catch(() => {});
+    api.get("/api/admin/reports").then(({ data }) => setReports(data)).catch(() => setError("Failed to load reports"));
+    api.get("/api/doctors").then(({ data }) => setDoctors(data)).catch(() => {});
   }, []);
 
   const handleAssign = async (reportId, doctorId) => {
     if (!doctorId) return;
     try {
-      await api.patch(`/admin/reports/${reportId}/assign-doctor`, { doctorId });
+      await api.patch(`/api/admin/reports/${reportId}/assign-doctor`, { doctorId });
       setReports((prev) =>
         prev.map((r) => (r._id === reportId ? { ...r, assignedDoctorId: { _id: doctorId, name: doctors.find(d => (d.userId?._id || d._id) === doctorId)?.userId?.name }, status: "ASSIGNED" } : r))
       );
@@ -26,8 +26,8 @@ export default function AllReports() {
 
   const handleReanalyze = async (reportId) => {
     try {
-      await api.post(`/admin/reports/${reportId}/reanalyze`);
-      const { data } = await api.get("/admin/reports");
+      await api.post(`/api/admin/reports/${reportId}/reanalyze`);
+      const { data } = await api.get("/api/admin/reports");
       setReports(data);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to reanalyze report");

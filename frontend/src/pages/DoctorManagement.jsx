@@ -15,16 +15,16 @@ export default function DoctorManagement() {
   const [form, setForm] = useState({ name: "", email: "", password: "", category: "General Physician", specialization: "", experienceYears: 0 });
 
   useEffect(() => {
-    api.get("/doctors").then(({ data }) => setDoctors(data)).catch(() => setError("Failed to load doctors"));
+    api.get("/api/doctors").then(({ data }) => setDoctors(data)).catch(() => setError("Failed to load doctors"));
   }, []);
 
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/doctors", form);
+      await api.post("/api/doctors", form);
       setShowForm(false);
       setForm({ name: "", email: "", password: "", category: "General Physician", specialization: "", experienceYears: 0 });
-      const { data } = await api.get("/doctors");
+      const { data } = await api.get("/api/doctors");
       setDoctors(data);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to create doctor");

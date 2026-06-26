@@ -18,8 +18,8 @@ export default function UploadReport() {
       formData.append("file", file);
       formData.append("symptoms", symptoms);
 
-      const { data: uploadData } = await api.post("/reports/upload", formData);
-      const { data: processData } = await api.post(`/reports/${uploadData.report._id}/extract-text`);
+      const { data: uploadData } = await api.post("/api/reports/upload", formData);
+      const { data: processData } = await api.post(`/api/reports/${uploadData.report._id}/extract-text`);
 
       setResult(processData.report);
     } catch (err) {

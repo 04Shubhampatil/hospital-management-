@@ -9,13 +9,13 @@ export default function AssignedCases() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get("/doctor/reports").then(({ data }) => setReports(data)).catch(() => setError("Failed to load assigned cases"));
+    api.get("/api/doctor/reports").then(({ data }) => setReports(data)).catch(() => setError("Failed to load assigned cases"));
   }, []);
 
   const handleReview = async (id) => {
     setReviewing(id);
     try {
-      await api.patch(`/doctor/reports/${id}/mark-reviewed`);
+      await api.patch(`/api/doctor/reports/${id}/mark-reviewed`);
       setReports((prev) => prev.map((r) => (r._id === id ? { ...r, status: "REVIEWED" } : r)));
     } catch (err) {
       setError(err.response?.data?.message || "Failed to mark as reviewed");
