@@ -32,13 +32,20 @@ export async function getMyReports(req, res, next) {
 
 export async function getReport(req, res, next) {
   try {
-    const report = await PatientReport.findById(req.params.id)
-      .populate("patientId", "name email")
-      .populate("assignedDoctorId", "name email");
+    const report = await PatientReport.findById(req.params.id);
     if (!report) return res.status(404).json({ message: "Report not found" });
-    if (report.patientId.toString() !== req.user.id && req.user.role !== "ADMIN") {
+
+    const isOwner = report.patientId?.toString() === req.user.id;
+    const isAssignedDoctor = report.assignedDoctorId?.toString() === req.user.id;
+    const isAdmin = req.user.role === "ADMIN";
+
+    if (!isOwner && !isAssignedDoctor && !isAdmin) {
       return res.status(403).json({ message: "Access denied" });
     }
+
+    await report.populate("patientId", "name email");
+    await report.populate("assignedDoctorId", "name email");
+
     res.json(report);
   } catch (err) {
     next(err);
