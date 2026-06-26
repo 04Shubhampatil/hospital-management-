@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+
+.env
+.env.local
+.env.*.local
+
+backend/uploads/
+*.pdf
+*.png
+*.jpg
+*.jpeg
+
+.DS_Store
+Thumbs.db
+*.log
