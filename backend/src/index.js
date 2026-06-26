@@ -16,6 +16,7 @@ app.use(
     origin: [
       "https://smart-hospital-crm.netlify.app",
       "https://hospital-management-gamma-two.vercel.app",
+    "  http://localhost:5173"
     ],
   })
 );
