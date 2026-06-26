@@ -25,6 +25,10 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || "Internal Server Error" });
 });
 
+app.get("/",(req,res)=>{
+  res.send("Hello World");
+})
+
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
